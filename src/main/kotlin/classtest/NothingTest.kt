@@ -50,3 +50,7 @@ class NothingTest {
 
     }
 }
+
+fun main() {
+    val v1 = Nothing()
+}

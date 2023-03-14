@@ -9,6 +9,8 @@ style: |
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1rem;
   }
+  span{color:red;}
+
 
 ---
 
@@ -17,19 +19,35 @@ style: |
 _backgroundColor: black
 _color: aqua
 -->
+
 # Kotlin中的类
 
 ---
 # kotlin类
+<style scoped>
+h1 {
+  color: blue;
+  text-align:center;
+}
+section {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+
+</style>
+
+
 |        |       |        |       |
 |  ----  | ----  |  ----  | ----  |
 |普通类|开放类|抽象类|嵌套类 | 
 |枚举类 |密封类|泛型类|注解类| 
 |委托类 |内联类 |Nothing类|接口|  
+
+![bg fit right bottom](https://raw.githubusercontent.com/wenfengtou/KotlinLearning/main/img/userUML.png)
+
+
 ---
-
-
-
 # 1.普通类与开放类
 在Kotlin中，类默认是不可继承的（final），这意味着您必须明确地将类声明为可继承的，才能被其他类继承。在这个方面，Kotlin提供了两种类型的类：普通类和开放类。
 
@@ -86,8 +104,15 @@ class MyDerivedClass : MyBaseClass() {
 ```
 如上，添加open关键字让类可继承
 
+
 ---
 
+# 为什么Kotlin的类默认设计为final？
+
+### * 编译时优化，例如内联函数（inline function）等
+### * 运行时开销，不需要进行继承检查和动态分派
+### * 开发者设计素养
+---
 # 2.抽象类
 ###### 抽象类定义
 ```
@@ -203,8 +228,53 @@ public final class Outer {
 </div>
 </div>
 如上，内部类不是静态的，所以要先构造外部类对象，可以访问外部类的成员message。
+
 ---
 
+# 4.Nothing类
+1)  用于表示函数或表达式<span>永远不会正常终止</span>的情况。
+2)  不可实例化，是所有类型的子类型，赋值给任何类型的变量。
+<div class="grid grid-cols-2 gap-4">
+<div>
+
+###### 永远不会正常终止的函数
+```
+fun error(message: String): Nothing {
+    throw IllegalArgumentException(message)
+}
+
+val x = error("Something went wrong")
+
+```
+</div>
+<div>
+
+
+###### 没有返回值的函数
+```
+fun exit() : Nothing {
+    System.exit(0)
+}
+fun infiniteLoop(): Nothing {
+    while (true) {
+        // do something forever
+    }
+}
+```
+
+</div>
+</div>
+
+---
+
+```
+fun bar(): Nothing {
+    // do something that never returns or throws an exception
+}
+
+val result: Int = bar() // OK, because Nothing is a subtype of Int
+```
+bar() 函数的返回类型为 Nothing，但它仍然可以被赋值给 result 变量，因为 Nothing 是 Int 的子类型。
 
 
 
